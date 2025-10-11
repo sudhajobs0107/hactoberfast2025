@@ -1,49 +1,159 @@
 body {
-  background: radial-gradient(circle, #1b0034, #000);
+  background: radial-gradient(circle at top, #1b0034, #000);
   color: #fff;
   font-family: 'Poppins', sans-serif;
   text-align: center;
   padding: 50px;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Animated background glow */
+body::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: conic-gradient(
+    from 180deg at 50% 50%, 
+    #ff00c8, #ffd700, #00ffff, #ff00c8
+  );
+  animation: rotate 8s linear infinite;
+  opacity: 0.1;
+  z-index: 0;
+}
+
+@keyframes rotate {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
 
 .app {
+  position: relative;
+  z-index: 1;
   max-width: 500px;
   margin: auto;
   background: rgba(255, 255, 255, 0.1);
-  border-radius: 12px;
-  padding: 30px;
-  box-shadow: 0 0 15px #ffd700;
+  border-radius: 16px;
+  padding: 40px 30px;
+  box-shadow: 0 0 25px rgba(255, 215, 0, 0.5), inset 0 0 10px rgba(255, 215, 0, 0.3);
+  backdrop-filter: blur(10px);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  animation: fadeIn 1.2s ease-out;
+}
+
+.app:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 0 35px rgba(255, 215, 0, 0.8), inset 0 0 15px rgba(255, 215, 0, 0.4);
 }
 
 button {
-  background-color: #ffd700;
+  background: linear-gradient(90deg, #ffd700, #ffb700);
   border: none;
   color: #000;
-  padding: 10px 20px;
-  margin-top: 20px;
-  border-radius: 5px;
+  padding: 12px 25px;
+  margin-top: 25px;
+  border-radius: 8px;
   cursor: pointer;
-  font-weight: bold;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 10px rgba(255, 215, 0, 0.7);
 }
 
 button:hover {
-  background-color: #fff700;
+  background: linear-gradient(90deg, #fff700, #ffd700);
+  box-shadow: 0 0 20px rgba(255, 255, 0, 0.9);
+  transform: scale(1.05);
 }
 
 .option {
   display: block;
-  margin: 10px auto;
-  padding: 10px;
-  width: 80%;
-  background: #2b0055;
-  border-radius: 5px;
+  margin: 12px auto;
+  padding: 12px;
+  width: 85%;
+  background: linear-gradient(90deg, #2b0055, #430080);
+  border-radius: 8px;
   cursor: pointer;
+  transition: all 0.3s ease;
+  color: #fff;
+  font-weight: 500;
+  box-shadow: 0 0 8px rgba(255, 215, 0, 0.3);
 }
 
 .option:hover {
-  background: #4c0099;
+  background: linear-gradient(90deg, #4c0099, #6f00ff);
+  box-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
+  transform: translateY(-3px);
 }
 
 .hide {
   display: none;
 }
+
+/* Optional glowing title */
+h1, h2 {
+  text-shadow: 0 0 10px #ffd700, 0 0 20px #ffb700;
+  letter-spacing: 1px;
+}
+
+/* Floating particles */
+@keyframes float {
+  0% { transform: translateY(0); opacity: 0.7; }
+  50% { transform: translateY(-20px); opacity: 1; }
+  100% { transform: translateY(0); opacity: 0.7; }
+}
+
+.particle {
+  position: absolute;
+  border-radius: 50%;
+  background: #ffd700;
+  width: 6px;
+  height: 6px;
+  opacity: 0.7;
+  animation: float 3s ease-in-out infinite;
+}
+
+/* Random particle positions */
+.particle:nth-child(1) { top: 20%; left: 25%; animation-delay: 0s; }
+.particle:nth-child(2) { top: 70%; left: 60%; animation-delay: 1s; }
+.particle:nth-child(3) { top: 50%; left: 80%; animation-delay: 2s; }
+.particle:nth-child(4) { top: 30%; left: 10%; animation-delay: 1.5s; }
+.particle:nth-child(5) { top: 85%; left: 40%; animation-delay: 0.5s; }
+
+/* Fade in animation */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Footer glow */
+.footer {
+  position: absolute;
+  bottom: 15px;
+  width: 100%;
+  text-align: center;
+  color: #ffd700;
+  font-size: 0.9rem;
+  text-shadow: 0 0 8px #ffd700, 0 0 15px #ffb700;
+  letter-spacing: 0.5px;
+  animation: glow 2s ease-in-out infinite alternate;
+}
+
+@keyframes glow {
+  from { opacity: 0.7; text-shadow: 0 0 5px #ffd700; }
+  to { opacity: 1; text-shadow: 0 0 20px #fff700, 0 0 30px #ffd700; }
+}
+.option {
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+.option:hover {
+  background: #4c0099; /* optional hover */
+}
+

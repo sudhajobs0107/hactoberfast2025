@@ -10,9 +10,9 @@ const questions = [
     correct: 1
   },
   {
-      question: "What is the largest mammal in the world?",
-      options: ["Elephant", "Blue Whale", "Giraffe", "Great White Shark"],
-      answer: "Blue Whale"
+    question: "What is the largest mammal in the world?",
+    options: ["Elephant", "Blue Whale", "Giraffe", "Great White Shark"],
+    correct: 1
   },
   {
     question: "Which planet is known as the Red Planet?",
@@ -31,7 +31,6 @@ let score = 0;
 
 const questionElement = document.getElementById("question");
 const optionsElement = document.getElementById("options");
-const nextBtn = document.getElementById("next-btn");
 const resultElement = document.getElementById("result");
 
 function loadQuestion() {
@@ -43,44 +42,52 @@ function loadQuestion() {
     const button = document.createElement("div");
     button.textContent = option;
     button.classList.add("option");
-    button.addEventListener("click", () => selectAnswer(index));
+    button.addEventListener("click", () => selectAnswer(index, button));
     optionsElement.appendChild(button);
   });
 }
 
-function selectAnswer(selectedIndex) {
+function selectAnswer(selectedIndex, selectedButton) {
   const correctIndex = questions[currentQuestion].correct;
   const allOptions = document.querySelectorAll(".option");
 
-  allOptions.forEach((option, index) => {
-    option.style.pointerEvents = "none";
+  // Disable all options
+  allOptions.forEach((btn) => (btn.style.pointerEvents = "none"));
+
+  // Apply colors
+  allOptions.forEach((btn, index) => {
     if (index === correctIndex) {
-      option.style.backgroundColor = "green";
-    } else if (index === selectedIndex) {
-      option.style.backgroundColor = "red";
+      btn.style.backgroundColor = "#28a745"; // green
+      btn.style.boxShadow = "0 0 10px #28a745";
+    } else if (index === selectedIndex && selectedIndex !== correctIndex) {
+      btn.style.backgroundColor = "#dc3545"; // red
+      btn.style.boxShadow = "0 0 10px #dc3545";
+    } else {
+      btn.style.opacity = "0.6";
     }
   });
 
+  // Add points if correct
   if (selectedIndex === correctIndex) score += 10000;
 
-  nextBtn.classList.remove("hide");
+  // Wait before showing next question
+  setTimeout(() => {
+    currentQuestion++;
+    if (currentQuestion < questions.length) {
+      loadQuestion();
+    } else {
+      showResult();
+    }
+  }, 1500); // show feedback for 1.5 sec
 }
-
-nextBtn.addEventListener("click", () => {
-  currentQuestion++;
-  if (currentQuestion < questions.length) {
-    nextBtn.classList.add("hide");
-    loadQuestion();
-  } else {
-    showResult();
-  }
-});
 
 function showResult() {
   document.getElementById("question-container").classList.add("hide");
-  nextBtn.classList.add("hide");
   resultElement.classList.remove("hide");
-  resultElement.innerHTML = `<h2>🏆 You won ₹${score.toLocaleString()}!</h2>`;
+  resultElement.innerHTML = `
+    <h2>🏆 You won ₹${score.toLocaleString()}!</h2>
+    <p>Thanks for playing, Vansh!</p>
+  `;
 }
 
 loadQuestion();
