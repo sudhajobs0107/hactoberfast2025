@@ -10,6 +10,11 @@ const questions = [
     correct: 1
   },
   {
+      question: "What is the tallest mountain in the world?",
+      options: ["K2", "Kangchenjunga", "Mount Everest", "Lhotse"],
+      answer: "Mount Everest"
+  },
+  {
       question: "What is the largest mammal in the world?",
       options: ["Elephant", "Blue Whale", "Giraffe", "Great White Shark"],
       answer: "Blue Whale"
