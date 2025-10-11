@@ -10,6 +10,11 @@ const questions = [
     correct: 1
   },
   {
+      question: "What is the largest mammal in the world?",
+      options: ["Elephant", "Blue Whale", "Giraffe", "Great White Shark"],
+      answer: "Blue Whale"
+  },
+  {
     question: "Which planet is known as the Red Planet?",
     options: ["Earth", "Mars", "Venus", "Jupiter"],
     correct: 1
