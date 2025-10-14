@@ -1,21 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>KBC Quiz Game 💰</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="icon" type="image/svg+xml" href="./assets/favicon.svg">
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <div class="app">
     <h1>🎯 Kaun Banega Crorepati</h1>
+
+    <!-- Timer Section -->
+    <div id="timer-container" class="hide">
+      <div id="timer-bar"></div>
+      <p id="timer-text">15s</p>
+    </div>
+
     <div id="question-container">
       <h2 id="question"></h2>
       <div id="options"></div>
     </div>
+
     <button id="next-btn" class="hide">Next Question</button>
     <div id="result" class="hide"></div>
   </div>
+
   <script src="script.js"></script>
 </body>
 </html>
