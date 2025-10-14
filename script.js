@@ -89,8 +89,26 @@ const timerBar = document.getElementById("timer-bar");
 const timerText = document.getElementById("timer-text");
 const timerContainer = document.getElementById("timer-container");
 
+const pointsBox = document.getElementById("points-box");
+const pointsValue = document.getElementById("points-value");
+
 const questionSound = new Audio('assets/kbc-question.mp3');
 
+function updatePointsDisplay() {
+  // Update the numeric display
+  pointsValue.textContent = `₹${score.toLocaleString()}`;
+
+  // Add pulse animation class and remove it after animation completes so it can retrigger
+  pointsValue.classList.remove("points-updated");
+  // Force reflow to restart the animation reliably
+  void pointsValue.offsetWidth;
+  pointsValue.classList.add("points-updated");
+}
+
+
+
+// Ensure points box is hidden initially but value set
+updatePointsDisplay();
 function loadQuestion() {
   const q = questions[currentQuestion];
   questionElement.textContent = `Q${currentQuestion + 1}. ${q.question}`;
@@ -157,7 +175,11 @@ function selectAnswer(selectedIndex) {
     }
   });
 
-  if (selectedIndex === correctIndex) score += 10000;
+    if (selectedIndex === correctIndex) {
+    score += 10000;
+    // update display immediately — real-time update
+    updatePointsDisplay();
+  }
   nextBtn.classList.remove("hide");
 }
 

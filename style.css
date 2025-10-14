@@ -15,6 +15,62 @@ body {
   box-shadow: 0 0 15px #ffd700;
 }
 
+/* Points button and box */
+#points-btn {
+  position: absolute;
+  right: 24px;
+  top: 20px;
+  background: transparent;
+  border: 2px solid #ffd700;
+  color: #ffd700;
+  padding: 6px 12px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-weight: 700;
+  transition: transform 0.15s ease;
+  z-index: 50;
+}
+#points-btn:hover {
+  transform: scale(1.05);
+}
+
+#points-box {
+  position: absolute;
+  right: 24px;
+  top: 20px;
+  background: rgba(0, 0, 0, 0.6);
+  border: 1px solid rgba(255, 215, 0, 0.6);
+  padding: 10px 14px;
+  border-radius: 8px;
+  width: 150px;
+  text-align: center;
+  box-shadow: 0 0 10px rgba(255, 215, 0, 0.15);
+  backdrop-filter: blur(4px);
+  z-index: 50;
+}
+#points-box p {
+  margin: 0;
+  font-size: 0.85rem;
+  color: #ffd700;
+}
+#points-box h3 {
+  margin: 4px 0 0;
+  font-size: 1.1rem;
+  color: #00ff88;
+  transition: transform 0.18s ease, text-shadow 0.18s ease;
+  will-change: transform, text-shadow;
+}
+
+/* pulse animation when points update */
+@keyframes points-pulse {
+  0% { transform: scale(1); text-shadow: 0 0 6px rgba(0,255,136,0.6); }
+  50% { transform: scale(1.12); text-shadow: 0 0 18px rgba(255,215,0,0.9); }
+  100% { transform: scale(1); text-shadow: 0 0 6px rgba(0,255,136,0.6); }
+}
+.points-updated {
+  animation: points-pulse 600ms ease forwards;
+}
+
 /* Timer Styling */
 #timer-container {
   position: relative;
