@@ -1,31 +1,69 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>KBC Quiz Game 💰</title>
-  <link rel="icon" type="image/svg+xml" href="./assets/favicon.svg">
-  <link rel="stylesheet" href="style.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KBC Quiz Game</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
 </head>
-<body>
-  <div class="app">
-    <h1>🎯 Kaun Banega Crorepati</h1>
+<body class="p-4">
 
-    <!-- Timer Section -->
-    <div id="timer-container" class="hide">
-      <div id="timer-bar"></div>
-      <p id="timer-text">15s</p>
+    <div class="w-full max-w-7xl mx-auto flex flex-col lg:flex-row gap-6">
+
+        <aside id="prize-panel-container" class="quiz-container w-full lg:w-1/3 rounded-2xl p-6 hidden">
+            <h2 class="text-3xl font-bold text-yellow-300 mb-4 text-center">Prize Money</h2>
+            <ul id="prize-list" class="flex flex-col-reverse space-y-2 space-y-reverse text-lg">
+                </ul>
+        </aside>
+
+        <main id="quiz-app" class="quiz-container w-full lg:w-2/3 mx-auto text-white rounded-2xl p-6 sm:p-8 text-center">
+            
+            <section id="start-screen">
+                <h1 class="text-4xl sm:text-5xl font-bold text-yellow-300 mb-4">Kaun Banega Crorepati</h1>
+                <p class="text-indigo-200 mb-8">Test your knowledge and win big!</p>
+                <button id="start-btn" class="w-full sm:w-auto bg-yellow-400 hover:bg-yellow-500 text-slate-900 font-bold py-3 px-8 rounded-lg text-xl transition-transform duration-200 hover:scale-105">
+                    Start Game
+                </button>
+            </section>
+
+            <section id="quiz-screen" class="hidden">
+                <div class="flex flex-wrap justify-between items-center mb-6 gap-4">
+                    <h2 class="text-2xl font-bold text-yellow-300">Question <span id="question-number"></span>/<span id="total-questions"></span></h2>
+                    <div class="text-lg bg-indigo-900 px-4 py-2 rounded-lg font-semibold">Winnings: <span id="winnings">₹ 0</span></div>
+                    <div id="timer-container" class="text-lg bg-indigo-900 px-4 py-2 rounded-lg font-semibold">Time: <span id="timer">30</span>s</div>
+                </div>
+
+                <div class="bg-indigo-900/50 p-6 rounded-lg mb-6 min-h-[100px] flex items-center justify-center">
+                    <p id="question-text" class="text-xl sm:text-2xl font-medium leading-relaxed"></p>
+                </div>
+
+                <div id="options-container" class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                    </div>
+                
+                <div id="feedback-container" class="min-h-[3rem]">
+                    </div>
+
+                <button id="next-btn" class="hidden mt-4 w-full sm:w-auto bg-yellow-400 hover:bg-yellow-500 text-slate-900 font-bold py-3 px-8 rounded-lg text-lg transition-transform duration-200 hover:scale-105">
+                    Next Question
+                </button>
+            </section>
+            
+            <section id="game-over-screen" class="hidden">
+                 <h1 class="text-4xl sm:text-5xl font-bold text-yellow-300 mb-4">Game Over!</h1>
+                 <p class="text-2xl text-indigo-200 mb-6">Your Final Winnings</p>
+                 <p id="final-score" class="text-6xl font-bold mb-8"></p>
+                 <button id="play-again-btn" class="w-full sm:w-auto bg-yellow-400 hover:bg-yellow-500 text-slate-900 font-bold py-3 px-8 rounded-lg text-xl transition-transform duration-200 hover:scale-105">
+                    Play Again
+                </button>
+            </section>
+
+        </main>
     </div>
 
-    <div id="question-container">
-      <h2 id="question"></h2>
-      <div id="options"></div>
-    </div>
-
-    <button id="next-btn" class="hide">Next Question</button>
-    <div id="result" class="hide"></div>
-  </div>
-
-  <script src="script.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
