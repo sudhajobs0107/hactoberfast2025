@@ -1,375 +1,306 @@
-<<<<<<Point
-const questions = [
-  {
-    question: "What is the capital of India?",
-    options: ["Delhi", "Mumbai", "Kolkata", "Chennai"],
-    correct: 0
-  },
-  {
-    question: "Who is known as the Father of the Nation (India)?",
-    options: ["Jawaharlal Nehru", "Mahatma Gandhi", "Sardar Patel", "Subhash Chandra Bose"],
-    correct: 1
-  },
-  {
-    question: "Which planet is known as the Red Planet?",
-    options: ["Earth", "Mars", "Venus", "Jupiter"],
-    correct: 1
-  },
-  {
-    question: "What is the national animal of India?",
-    options: ["Lion", "Elephant", "Tiger", "Peacock"],
-    correct: 2
-  },
-  {
-    question: "What is the tallest mountain in the world?",
-    options: ["K2", "Kangchenjunga", "Mount Everest", "Lhotse"],
-    correct: 2
-  },
-  {
-    question: "Which is the largest ocean on Earth?",
-    options: ["Atlantic Ocean", "Indian Ocean", "Arctic Ocean", "Pacific Ocean"],
-    correct: 3
-  },
-  {
-    question: "Who invented the light bulb?",
-    options: ["Thomas Edison", "Nikola Tesla", "Alexander Graham Bell", "Benjamin Franklin"],
-    correct: 0
-  },
-  {
-    question: "Which is the largest continent by land area?",
-    options: ["Africa", "Asia", "Europe", "North America"],
-    correct: 1
-  },
-  {
-    question: "Which is the smallest prime number?",
-    options: ["0", "1", "2", "3"],
-    correct: 2
-  },
-  {
-    question: "Which language is primarily used for web development?",
-    options: ["Python", "C++", "JavaScript", "Java"],
-    correct: 2
-  },
-  {
-    question: "Who wrote 'Hamlet'?",
-    options: ["William Wordsworth", "William Shakespeare", "Jane Austen", "Charles Dickens"],
-    correct: 1
-  },
-  {
-    question: "Which gas do plants absorb for photosynthesis?",
-    options: ["Oxygen", "Carbon Dioxide", "Nitrogen", "Hydrogen"],
-    correct: 1
-  },
-  {
-    question: "Which is the longest river in the world?",
-    options: ["Nile", "Amazon", "Yangtze", "Mississippi"],
-    correct: 0
-  },
-  {
-    question: "What is the currency of Japan?",
-    options: ["Yen", "Dollar", "Won", "Rupee"],
-    correct: 0
-  },
-  {
-    question: "Which planet is closest to the Sun?",
-    options: ["Mercury", "Venus", "Earth", "Mars"],
-    correct: 0
+document.addEventListener("DOMContentLoaded", () => {
+  /* 
+    newly added: Added many more questions so that each difficulty (easy, medium, hard)
+    has 10-15 questions each. Also: for the medium and hard levels kept the time less
+    than the previous level. 
+  */
+  const quizData = [
+    /* ========== EASY (newly added) - 10 questions ========== */
+    { question: "What is the capital of India?", difficulty: "easy", options: [{ text: "Delhi", correct: true }, { text: "Mumbai", correct: false }, { text: "Kolkata", correct: false }, { text: "Chennai", correct: false }] },
+    { question: "Which color do you get when you mix red and white?", difficulty: "easy", options: [{ text: "Pink", correct: true }, { text: "Purple", correct: false }, { text: "Orange", correct: false }, { text: "Brown", correct: false }] },
+    { question: "How many legs does a spider have?", difficulty: "easy", options: [{ text: "6", correct: false }, { text: "8", correct: true }, { text: "10", correct: false }, { text: "12", correct: false }] },
+    { question: "Which planet is known as the Red Planet?", difficulty: "easy", options: [{ text: "Earth", correct: false }, { text: "Mars", correct: true }, { text: "Venus", correct: false }, { text: "Jupiter", correct: false }] },
+    { question: "Which language is primarily used for web development in the browser?", difficulty: "easy", options: [{ text: "C++", correct: false }, { text: "Python", correct: false }, { text: "JavaScript", correct: true }, { text: "Java", correct: false }] },
+    { question: "What is 2 + 2?", difficulty: "easy", options: [{ text: "3", correct: false }, { text: "4", correct: true }, { text: "5", correct: false }, { text: "22", correct: false }] },
+    { question: "Which animal is known as the 'King of the Jungle'?", difficulty: "easy", options: [{ text: "Tiger", correct: false }, { text: "Elephant", correct: false }, { text: "Lion", correct: true }, { text: "Giraffe", correct: false }] },
+    { question: "Which gas do plants primarily absorb for photosynthesis?", difficulty: "easy", options: [{ text: "Oxygen", correct: false }, { text: "Carbon Dioxide", correct: true }, { text: "Nitrogen", correct: false }, { text: "Hydrogen", correct: false }] },
+    { question: "Which is the smallest prime number?", difficulty: "easy", options: [{ text: "0", correct: false }, { text: "1", correct: false }, { text: "2", correct: true }, { text: "3", correct: false }] },
+    { question: "What is the national animal of India?", difficulty: "easy", options: [{ text: "Lion", correct: false }, { text: "Elephant", correct: false }, { text: "Tiger", correct: true }, { text: "Peacock", correct: false }] },
+
+    /* ========== MEDIUM (newly added) - 10 questions ========== */
+    { question: "What is the tallest mountain in the world?", difficulty: "medium", options: [{ text: "K2", correct: false }, { text: "Mount Everest", correct: true }, { text: "Kangchenjunga", correct: false }, { text: "Lhotse", correct: false }] },
+    { question: "Which is the largest ocean on Earth?", difficulty: "medium", options: [{ text: "Atlantic Ocean", correct: false }, { text: "Indian Ocean", correct: false }, { text: "Pacific Ocean", correct: true }, { text: "Arctic Ocean", correct: false }] },
+    { question: "Who invented the light bulb (commonly credited)?", difficulty: "medium", options: [{ text: "Nikola Tesla", correct: false }, { text: "Thomas Edison", correct: true }, { text: "Alexander Graham Bell", correct: false }, { text: "Benjamin Franklin", correct: false }] },
+    { question: "Which is the largest continent by land area?", difficulty: "medium", options: [{ text: "Africa", correct: false }, { text: "Asia", correct: true }, { text: "Europe", correct: false }, { text: "North America", correct: false }] },
+    { question: "Who wrote the play 'Hamlet'?", difficulty: "medium", options: [{ text: "William Shakespeare", correct: true }, { text: "Christopher Marlowe", correct: false }, { text: "Ben Jonson", correct: false }, { text: "John Donne", correct: false }] },
+    { question: "What is the chemical symbol for gold?", difficulty: "medium", options: [{ text: "Gd", correct: false }, { text: "Ag", correct: false }, { text: "Au", correct: true }, { text: "Ga", correct: false }] },
+    { question: "Which city is known as the 'City of Light' and famous for the Eiffel Tower?", difficulty: "medium", options: [{ text: "Rome", correct: false }, { text: "Paris", correct: true }, { text: "London", correct: false }, { text: "Madrid", correct: false }] },
+    { question: "What is the currency of Japan?", difficulty: "medium", options: [{ text: "Dollar", correct: false }, { text: "Euro", correct: false }, { text: "Yen", correct: true }, { text: "Rupee", correct: false }] },
+    { question: "Which organ in the human body produces insulin?", difficulty: "medium", options: [{ text: "Liver", correct: false }, { text: "Pancreas", correct: true }, { text: "Kidney", correct: false }, { text: "Spleen", correct: false }] },
+    { question: "Which river is traditionally considered the longest in the world?", difficulty: "medium", options: [{ text: "Amazon", correct: false }, { text: "Nile", correct: true }, { text: "Yangtze", correct: false }, { text: "Mississippi", correct: false }] },
+
+    /* ========== HARD (newly added) - 10 questions ========== */
+    { question: "Which planet is closest to the Sun?", difficulty: "hard", options: [{ text: "Venus", correct: false }, { text: "Mercury", correct: true }, { text: "Earth", correct: false }, { text: "Mars", correct: false }] },
+    { question: "What is the SI unit of electric resistance?", difficulty: "hard", options: [{ text: "Ohm", correct: true }, { text: "Volt", correct: false }, { text: "Ampere", correct: false }, { text: "Watt", correct: false }] },
+    { question: "Who proposed the theory of general relativity?", difficulty: "hard", options: [{ text: "Isaac Newton", correct: false }, { text: "Albert Einstein", correct: true }, { text: "Galileo Galilei", correct: false }, { text: "Niels Bohr", correct: false }] },
+    { question: "Which element has atomic number 26?", difficulty: "hard", options: [{ text: "Iron", correct: true }, { text: "Copper", correct: false }, { text: "Zinc", correct: false }, { text: "Nickel", correct: false }] },
+    { question: "What is the longest bone in the human body?", difficulty: "hard", options: [{ text: "Femur", correct: true }, { text: "Tibia", correct: false }, { text: "Humerus", correct: false }, { text: "Fibula", correct: false }] },
+    { question: "Which mathematician is known for the work 'Principia Mathematica'?", difficulty: "hard", options: [{ text: "Euclid", correct: false }, { text: "Isaac Newton", correct: true }, { text: "Leonhard Euler", correct: false }, { text: "Bernard Russell", correct: false }] },
+    { question: "Which country launched the first artificial satellite, Sputnik 1?", difficulty: "hard", options: [{ text: "United States", correct: false }, { text: "Soviet Union", correct: true }, { text: "China", correct: false }, { text: "United Kingdom", correct: false }] },
+    { question: "Which process converts glucose into energy in cells (aerobic)?", difficulty: "hard", options: [{ text: "Photosynthesis", correct: false }, { text: "Cellular respiration", correct: true }, { text: "Fermentation", correct: false }, { text: "Glycolysis only", correct: false }] },
+    { question: "What is the capital city of Mongolia?", difficulty: "hard", options: [{ text: "Ulaanbaatar", correct: true }, { text: "Astana", correct: false }, { text: "Bishkek", correct: false }, { text: "Tashkent", correct: false }] },
+    { question: "Which branch of mathematics deals with the study of shapes and their properties?", difficulty: "hard", options: [{ text: "Algebra", correct: false }, { text: "Geometry", correct: true }, { text: "Calculus", correct: false }, { text: "Statistics", correct: false }] }
+  ];
+
+  /* newly added: Time settings per difficulty.
+     for the medium and hard levels kept the time less than the previous level.
+     - easy: highest time
+     - medium: less than easy
+     - hard: less than medium
+     newly added
+  */
+  const TIME_BY_DIFFICULTY = {
+    easy: 30,   // seconds
+    medium: 20, // less than easy
+    hard: 12    // less than medium
+  };
+
+  const prizeLevels = [
+    1000, 2000, 5000, 10000, 20000,
+    40000, 80000, 160000, 320000, 640000,
+    1250000, 2500000, 5000000, 7500000, 10000000
+  ];
+
+  // DOM elements
+  const startScreen = document.getElementById("start-screen");
+  const quizScreen = document.getElementById("quiz-screen");
+  const gameOverScreen = document.getElementById("game-over-screen");
+  const prizePanelContainer = document.getElementById("prize-panel-container");
+
+  const startBtn = document.getElementById("start-btn");
+  const nextBtn = document.getElementById("next-btn");
+  const playAgainBtn = document.getElementById("play-again-btn");
+
+  const questionNumberEl = document.getElementById("question-number");
+  const totalQuestionsEl = document.getElementById("total-questions");
+  const winningsEl = document.getElementById("winnings");
+  const questionTextEl = document.getElementById("question-text");
+  const optionsContainer = document.getElementById("options-container");
+  const feedbackContainer = document.getElementById("feedback-container");
+  const finalScoreEl = document.getElementById("final-score");
+  const prizeListEl = document.getElementById("prize-list");
+  const timerEl = document.getElementById("timer");
+
+  const pointsValue = document.getElementById("points-value");
+
+  // newly added: difficulty UI elements 
+  const difficultyGroup = document.getElementById("difficulty-group");
+  const difficultyButtons = difficultyGroup ? difficultyGroup.querySelectorAll(".difficulty-btn") : [];
+  let selectedDifficulty = "medium"; // default -- newly added
+
+  // attach click handlers to difficulty buttons (newly added)
+  difficultyButtons.forEach(btn => {
+    btn.addEventListener("click", () => {
+      difficultyButtons.forEach(b => b.classList.remove("selected"));
+      btn.classList.add("selected");
+      selectedDifficulty = btn.dataset.difficulty;
+    });
+  });
+
+  // Sound (optional)
+  const questionSound = new Audio("assets/kbc-question.mp3");
+  questionSound.preload = "auto";
+
+  // Game state
+  let currentQuestionIndex = 0;
+  let score = 0;
+  let shuffledQuestions = [];
+  let timerInterval = null;
+  let questionTime = TIME_BY_DIFFICULTY[selectedDifficulty]; // will be set on start
+  // QUESTION_TIME constant removed in favor of per-game questionTime
+
+  function updatePointsDisplay() {
+    pointsValue.textContent = `₹${score.toLocaleString("en-IN")}`;
+    pointsValue.classList.remove("points-updated");
+    // force reflow to restart animation if CSS added
+    void pointsValue.offsetWidth;
+    pointsValue.classList.add("points-updated");
   }
-];
 
-let currentQuestion = 0;
-let score = 0;
-let timer;
-let timeLeft = 15;
+  function startGame() {
+    /* newly added: set questionTime based on chosen difficulty.
+       for the medium and hard levels keep the time less than the previous level.
+       newly added
+    */
+    questionTime = TIME_BY_DIFFICULTY[selectedDifficulty] || TIME_BY_DIFFICULTY.easy;
 
-const questionElement = document.getElementById("question");
-const optionsElement = document.getElementById("options");
-const nextBtn = document.getElementById("next-btn");
-const resultElement = document.getElementById("result");
-const timerBar = document.getElementById("timer-bar");
-const timerText = document.getElementById("timer-text");
-const timerContainer = document.getElementById("timer-container");
+    // Filter questions by selected difficulty (newly added)
+    const filtered = selectedDifficulty
+      ? quizData.filter(q => q.difficulty === selectedDifficulty)
+      : quizData.slice();
 
-const pointsBox = document.getElementById("points-box");
-const pointsValue = document.getElementById("points-value");
+    // fallback: if no questions for chosen difficulty, use full set
+    const pool = filtered.length ? filtered : quizData.slice();
 
-const questionSound = new Audio('assets/kbc-question.mp3');
+    startScreen.classList.add("hidden");
+    gameOverScreen.classList.add("hidden");
+    quizScreen.classList.remove("hidden");
+    prizePanelContainer.classList.remove("hidden");
 
-function updatePointsDisplay() {
-  // Update the numeric display
-  pointsValue.textContent = `₹${score.toLocaleString()}`;
-
-  // Add pulse animation class and remove it after animation completes so it can retrigger
-  pointsValue.classList.remove("points-updated");
-  // Force reflow to restart the animation reliably
-  void pointsValue.offsetWidth;
-  pointsValue.classList.add("points-updated");
-}
-
-
-
-// Ensure points box is hidden initially but value set
-updatePointsDisplay();
-function loadQuestion() {
-  const q = questions[currentQuestion];
-  questionElement.textContent = `Q${currentQuestion + 1}. ${q.question}`;
-  optionsElement.innerHTML = "";
-  timerContainer.classList.remove("hide");
-
-  // Play KBC question sound
-  questionSound.currentTime = 0;
-  questionSound.play();
-
-  q.options.forEach((option, index) => {
-    const button = document.createElement("div");
-    button.textContent = option;
-    button.classList.add("option");
-    button.addEventListener("click", () => selectAnswer(index));
-    optionsElement.appendChild(button);
-  });
-
-  resetTimer();
-  startTimer();
-}
-
-function startTimer() {
-  timeLeft = 15;
-  timerText.textContent = `${timeLeft}s`;
-  timerBar.style.width = "100%";
-
-  timer = setInterval(() => {
-    timeLeft--;
-    timerText.textContent = `${timeLeft}s`;
-    timerBar.style.width = `${(timeLeft / 15) * 100}%`;
-
-    if (timeLeft <= 0) {
-      clearInterval(timer);
-      handleTimeUp();
-=======
-document.addEventListener('DOMContentLoaded', () => {
-
-    const quizData = [
-        { question: "What is the capital of India?", options: [{ text: "Delhi", correct: true }, { text: "Mumbai", correct: false }, { text: "Kolkata", correct: false }, { text: "Chennai", correct: false }] },
-        { question: "Which planet is known as the Red Planet?", options: [{ text: "Earth", correct: false }, { text: "Mars", correct: true }, { text: "Jupiter", correct: false }, { text: "Venus", correct: false }] },
-        { question: "Who wrote the Indian National Anthem?", options: [{ text: "Bankim Chandra Chatterjee", correct: false }, { text: "Mahatma Gandhi", correct: false }, { text: "Rabindranath Tagore", correct: true }, { text: "Sarojini Naidu", correct: false }] },
-        { question: "What is the largest mammal in the world?", options: [{ text: "Elephant", correct: false }, { text: "Giraffe", correct: false }, { text: "Blue Whale", correct: true }, { text: "Great White Shark", correct: false }] },
-        { question: "In which year did India gain independence?", options: [{ text: "1945", correct: false }, { text: "1947", correct: true }, { text: "1950", correct: false }, { text: "1942", correct: false }] },
-        { question: "Which gas is most abundant in the Earth's atmosphere?", options: [{ text: "Oxygen", correct: false }, { text: "Hydrogen", correct: false }, { text: "Carbon Dioxide", correct: false }, { text: "Nitrogen", correct: true }] },
-        { question: "What is the currency of Japan?", options: [{ text: "Yuan", correct: false }, { text: "Won", correct: false }, { text: "Yen", correct: true }, { text: "Dollar", correct: false }] },
-        { question: "Who painted the Mona Lisa?", options: [{ text: "Vincent van Gogh", correct: false }, { text: "Leonardo da Vinci", correct: true }, { text: "Pablo Picasso", correct: false }, { text: "Michelangelo", correct: false }] },
-        { question: "What is the hardest natural substance on Earth?", options: [{ text: "Gold", correct: false }, { text: "Iron", correct: false }, { text: "Diamond", correct: true }, { text: "Platinum", correct: false }] },
-        { question: "How many continents are there in the world?", options: [{ text: "5", correct: false }, { text: "6", correct: false }, { text: "7", correct: true }, { text: "8", correct: false }] }
-    ];
-
-    const prizeLevels = [
-        1000, 5000, 10000, 20000, 40000, 80000, 160000, 320000, 640000, 1000000
-    ];
-
-    // DOM Elements
-    const startScreen = document.getElementById('start-screen');
-    const quizScreen = document.getElementById('quiz-screen');
-    const gameOverScreen = document.getElementById('game-over-screen');
-    const prizePanelContainer = document.getElementById('prize-panel-container');
-
-    const startBtn = document.getElementById('start-btn');
-    const nextBtn = document.getElementById('next-btn');
-    const playAgainBtn = document.getElementById('play-again-btn');
-
-    const questionNumberEl = document.getElementById('question-number');
-    const totalQuestionsEl = document.getElementById('total-questions');
-    const winningsEl = document.getElementById('winnings');
-    const questionTextEl = document.getElementById('question-text');
-    const optionsContainer = document.getElementById('options-container');
-    const feedbackContainer = document.getElementById('feedback-container');
-    const finalScoreEl = document.getElementById('final-score');
-    const prizeListEl = document.getElementById('prize-list');
-    const timerEl = document.getElementById('timer');
-
-    // Game State
-    let currentQuestionIndex = 0;
-    let score = 0;
-    let shuffledQuestions = [];
-    let timerInterval;
-
-    function startGame() {
-        startScreen.classList.add('hidden');
-        gameOverScreen.classList.add('hidden');
-        quizScreen.classList.remove('hidden');
-        prizePanelContainer.classList.remove('hidden');
-        
-        score = 0;
-        currentQuestionIndex = 0;
-        shuffledQuestions = quizData.sort(() => Math.random() - 0.5);
-        totalQuestionsEl.innerText = shuffledQuestions.length;
-        winningsEl.innerText = `₹ ${score}`;
-        
-        renderPrizeList();
-        showQuestion();
->>>>>>main
-    }
-
-    function renderPrizeList() {
-        prizeListEl.innerHTML = '';
-        prizeLevels.slice(0, quizData.length).forEach((prize, index) => {
-            const li = document.createElement('li');
-            li.classList.add('prize-item', 'p-2', 'rounded-md', 'font-semibold');
-            li.innerHTML = `
-                <span class="text-yellow-300 mr-2">${index + 1}.</span>
-                <span>₹ ${prize.toLocaleString('en-IN')}</span>
-            `;
-            prizeListEl.appendChild(li);
-        });
-    }
-<<<<<<Point
-  });
-
-    if (selectedIndex === correctIndex) {
-    score += 10000;
-    // update display immediately — real-time update
+    score = 0;
+    currentQuestionIndex = 0;
+    // shuffle pool and limit to maximum of prizeLevels length to avoid missing prize entries
+    shuffledQuestions = [...pool].sort(() => Math.random() - 0.5).slice(0, prizeLevels.length);
+    totalQuestionsEl.innerText = shuffledQuestions.length;
+    winningsEl.innerText = `₹ ${score}`;
     updatePointsDisplay();
+    renderPrizeList();
+    showQuestion();
   }
-  nextBtn.classList.remove("hide");
-}
 
-nextBtn.addEventListener("click", () => {
-  currentQuestion++;
-  if (currentQuestion < questions.length) {
-    nextBtn.classList.add("hide");
-    loadQuestion();
-  } else {
-    showResult();
+  function renderPrizeList() {
+    prizeListEl.innerHTML = "";
+    // render in order (lowest -> highest) to match quiz order
+    for (let i = 0; i < shuffledQuestions.length; i++) {
+      const li = document.createElement("li");
+      li.className = "prize-item";
+      li.dataset.index = i;
+      li.innerHTML = `<span>${i + 1}.</span> <span>₹ ${prizeLevels[i].toLocaleString("en-IN")}</span>`;
+      prizeListEl.appendChild(li);
+    }
+    updatePrizeHighlight();
   }
-});
-=======
->>>>>>main
 
-    function updatePrizeHighlight() {
-        const prizeItems = prizeListEl.querySelectorAll('li');
-        prizeItems.forEach((item, index) => {
-            item.classList.remove('current', 'completed');
-            if (index < currentQuestionIndex) {
-                item.classList.add('completed');
-            }
-            if (index === currentQuestionIndex) {
-                item.classList.add('current');
-            }
-        });
-    }
-    
-    function showQuestion() {
-        resetState();
-        updatePrizeHighlight();
+  function updatePrizeHighlight() {
+    const items = prizeListEl.querySelectorAll("li");
+    items.forEach((item, idx) => {
+      item.classList.remove("current", "completed");
+      if (idx < currentQuestionIndex) item.classList.add("completed");
+      if (idx === currentQuestionIndex) item.classList.add("current");
+    });
+  }
 
-        const currentQuestion = shuffledQuestions[currentQuestionIndex];
-        questionNumberEl.innerText = currentQuestionIndex + 1;
-        questionTextEl.innerText = currentQuestion.question;
+  function showQuestion() {
+    resetState();
+    updatePrizeHighlight();
 
-        currentQuestion.options.forEach(option => {
-            const button = document.createElement('button');
-            button.innerText = option.text;
-            button.classList.add('option-btn', 'w-full', 'text-left', 'p-4', 'rounded-lg', 'border-2', 'border-indigo-500', 'text-lg');
-            if (option.correct) {
-                button.dataset.correct = 'true';
-            }
-            button.addEventListener('click', selectAnswer);
-            optionsContainer.appendChild(button);
-        });
-        startTimer();
-    }
-    
-    function startTimer() {
-        let timeLeft = 30;
-        timerEl.innerText = timeLeft;
-        timerInterval = setInterval(() => {
-            timeLeft--;
-            timerEl.innerText = timeLeft;
-            if (timeLeft <= 0) {
-                clearInterval(timerInterval);
-                handleTimeout();
-            }
-        }, 1000);
-    }
-    
-    function handleTimeout() {
-        showFeedback("Time's up! Game Over.", "text-red-400");
-        Array.from(optionsContainer.children).forEach(button => {
-            if (button.dataset.correct === 'true') {
-                button.classList.add('correct'); // Show correct answer
-            }
-            button.disabled = true;
-        });
-        setTimeout(endGame, 2000);
-    }
+    const current = shuffledQuestions[currentQuestionIndex];
+    questionNumberEl.innerText = currentQuestionIndex + 1;
+    questionTextEl.innerText = current.question;
 
-    function resetState() {
+    current.options.forEach((opt, idx) => {
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "option-btn";
+      btn.innerText = opt.text;
+      if (opt.correct) btn.dataset.correct = "true";
+      btn.addEventListener("click", selectAnswer);
+      optionsContainer.appendChild(btn);
+    });
+
+    // play question sound (ignore errors)
+    try {
+      questionSound.currentTime = 0;
+      questionSound.play().catch(() => {});
+    } catch (e) {}
+
+    startTimer();
+  }
+
+  function startTimer() {
+    clearInterval(timerInterval);
+    let timeLeft = questionTime; // use per-game questionTime (newly added)
+    timerEl.innerText = timeLeft;
+    timerInterval = setInterval(() => {
+      timeLeft--;
+      timerEl.innerText = timeLeft;
+      if (timeLeft <= 0) {
         clearInterval(timerInterval);
-        nextBtn.classList.add('hidden');
-        feedbackContainer.innerHTML = '';
-        while(optionsContainer.firstChild) {
-            optionsContainer.removeChild(optionsContainer.firstChild);
-        }
+        handleTimeout();
+      }
+    }, 1000);
+  }
+
+  function handleTimeout() {
+    showFeedback("Time's up! Game Over.", "wrong");
+    // reveal correct answer
+    Array.from(optionsContainer.children).forEach(btn => {
+      if (btn.dataset.correct === "true") btn.classList.add("correct");
+      btn.disabled = true;
+    });
+    setTimeout(endGame, 1500);
+  }
+
+  function resetState() {
+    clearInterval(timerInterval);
+    nextBtn.classList.add("hidden");
+    feedbackContainer.innerHTML = "";
+    optionsContainer.innerHTML = "";
+  }
+
+  function selectAnswer(e) {
+    clearInterval(timerInterval);
+    const selectedBtn = e.currentTarget;
+    const isCorrect = selectedBtn.dataset.correct === "true";
+
+    // disable all and show status
+    Array.from(optionsContainer.children).forEach(btn => {
+      btn.disabled = true;
+      const correct = btn.dataset.correct === "true";
+      setStatusClass(btn, correct);
+    });
+
+    if (isCorrect) {
+      // award current prize
+      score = prizeLevels[currentQuestionIndex];
+      winningsEl.innerText = `₹ ${score.toLocaleString("en-IN")}`;
+      updatePointsDisplay();
+      showFeedback("Correct Answer!", "correct");
+
+      // mark completed
+      const item = prizeListEl.querySelector(`li[data-index="${currentQuestionIndex}"]`);
+      if (item) item.classList.add("completed");
+
+      // next or finish
+      if (currentQuestionIndex < shuffledQuestions.length - 1) {
+        nextBtn.classList.remove("hidden");
+      } else {
+        showFeedback("Congratulations! You've won it all!", "correct");
+        setTimeout(endGame, 1200);
+      }
+    } else {
+      showFeedback("Wrong Answer! Game Over.", "wrong");
+      setTimeout(endGame, 1200);
     }
+  }
 
-    function selectAnswer(e) {
-        clearInterval(timerInterval);
-        const selectedBtn = e.target;
-        const isCorrect = selectedBtn.dataset.correct === 'true';
-
-        Array.from(optionsContainer.children).forEach(button => {
-            setStatusClass(button, button.dataset.correct === 'true');
-            button.disabled = true;
-        });
-
-        if (isCorrect) {
-            score = prizeLevels[currentQuestionIndex];
-            winningsEl.innerText = `₹ ${score.toLocaleString('en-IN')}`;
-            showFeedback("Correct Answer!", "text-green-400");
-            
-            prizeListEl.children[currentQuestionIndex].classList.add('completed');
-            prizeListEl.children[currentQuestionIndex].classList.remove('current');
-
-            if (shuffledQuestions.length > currentQuestionIndex + 1) {
-                 nextBtn.classList.remove('hidden');
-            } else {
-                 showFeedback("Congratulations! You've won it all!", "text-yellow-300");
-                 setTimeout(endGame, 2000);
-            }
-        } else {
-             showFeedback("Wrong Answer! Game Over.", "text-red-400");
-             setTimeout(endGame, 2000);
-        }
+  function setStatusClass(element, correct) {
+    element.classList.remove("correct", "incorrect");
+    if (correct) {
+      element.classList.add("correct");
+    } else {
+      element.classList.add("incorrect");
     }
-    
-    function setStatusClass(element, correct) {
-        if (correct) {
-            element.classList.add('correct');
-        } else {
-            element.classList.add('incorrect');
-        }
-    }
-    
-    function showFeedback(message, colorClass) {
-        feedbackContainer.innerHTML = ''; // Clear previous feedback
-        const feedbackEl = document.createElement('p');
-        feedbackEl.innerText = message;
-        feedbackEl.classList.add('feedback', 'text-xl', 'font-bold', colorClass);
-        feedbackContainer.appendChild(feedbackEl);
-    }
+  }
 
-    function handleNextQuestion() {
-        currentQuestionIndex++;
-        showQuestion();
-    }
+  function showFeedback(message, status) {
+    feedbackContainer.innerHTML = "";
+    const p = document.createElement("p");
+    p.className = "feedback";
+    p.innerText = message;
+    if (status === "correct") p.classList.add("text-green");
+    if (status === "wrong") p.classList.add("text-red");
+    feedbackContainer.appendChild(p);
+  }
 
-    function endGame() {
-        quizScreen.classList.add('hidden');
-        gameOverScreen.classList.remove('hidden');
-        prizePanelContainer.classList.add('hidden');
-        finalScoreEl.innerText = `₹ ${score.toLocaleString('en-IN')}`;
-    }
+  function handleNextQuestion() {
+    currentQuestionIndex++;
+    showQuestion();
+  }
 
-    // Event Listeners
-    startBtn.addEventListener('click', startGame);
-    nextBtn.addEventListener('click', handleNextQuestion);
-    playAgainBtn.addEventListener('click', startGame);
+  function endGame() {
+    clearInterval(timerInterval);
+    quizScreen.classList.add("hidden");
+    gameOverScreen.classList.remove("hidden");
+    prizePanelContainer.classList.add("hidden");
+    finalScoreEl.innerText = `₹ ${score.toLocaleString("en-IN")}`;
+  }
+
+  // Event listeners
+  startBtn.addEventListener("click", startGame);
+  nextBtn.addEventListener("click", handleNextQuestion);
+  playAgainBtn.addEventListener("click", startGame);
+
+  // initialize display
+  updatePointsDisplay();
 });
