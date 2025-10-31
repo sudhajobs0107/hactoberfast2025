@@ -1,11 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
-  /* 
-    newly added: Added many more questions so that each difficulty (easy, medium, hard)
-    has 10-15 questions each. Also: for the medium and hard levels kept the time less
-    than the previous level. 
-  */
   const quizData = [
-    /* ========== EASY (newly added) - 10 questions ========== */
+    /* EASY */
     { question: "What is the capital of India?", difficulty: "easy", options: [{ text: "Delhi", correct: true }, { text: "Mumbai", correct: false }, { text: "Kolkata", correct: false }, { text: "Chennai", correct: false }] },
     { question: "Which color do you get when you mix red and white?", difficulty: "easy", options: [{ text: "Pink", correct: true }, { text: "Purple", correct: false }, { text: "Orange", correct: false }, { text: "Brown", correct: false }] },
     { question: "How many legs does a spider have?", difficulty: "easy", options: [{ text: "6", correct: false }, { text: "8", correct: true }, { text: "10", correct: false }, { text: "12", correct: false }] },
@@ -17,7 +12,7 @@ document.addEventListener("DOMContentLoaded", () => {
     { question: "Which is the smallest prime number?", difficulty: "easy", options: [{ text: "0", correct: false }, { text: "1", correct: false }, { text: "2", correct: true }, { text: "3", correct: false }] },
     { question: "What is the national animal of India?", difficulty: "easy", options: [{ text: "Lion", correct: false }, { text: "Elephant", correct: false }, { text: "Tiger", correct: true }, { text: "Peacock", correct: false }] },
 
-    /* ========== MEDIUM (newly added) - 10 questions ========== */
+    /* MEDIUM */
     { question: "What is the tallest mountain in the world?", difficulty: "medium", options: [{ text: "K2", correct: false }, { text: "Mount Everest", correct: true }, { text: "Kangchenjunga", correct: false }, { text: "Lhotse", correct: false }] },
     { question: "Which is the largest ocean on Earth?", difficulty: "medium", options: [{ text: "Atlantic Ocean", correct: false }, { text: "Indian Ocean", correct: false }, { text: "Pacific Ocean", correct: true }, { text: "Arctic Ocean", correct: false }] },
     { question: "Who invented the light bulb (commonly credited)?", difficulty: "medium", options: [{ text: "Nikola Tesla", correct: false }, { text: "Thomas Edison", correct: true }, { text: "Alexander Graham Bell", correct: false }, { text: "Benjamin Franklin", correct: false }] },
@@ -29,7 +24,7 @@ document.addEventListener("DOMContentLoaded", () => {
     { question: "Which organ in the human body produces insulin?", difficulty: "medium", options: [{ text: "Liver", correct: false }, { text: "Pancreas", correct: true }, { text: "Kidney", correct: false }, { text: "Spleen", correct: false }] },
     { question: "Which river is traditionally considered the longest in the world?", difficulty: "medium", options: [{ text: "Amazon", correct: false }, { text: "Nile", correct: true }, { text: "Yangtze", correct: false }, { text: "Mississippi", correct: false }] },
 
-    /* ========== HARD (newly added) - 10 questions ========== */
+    /* HARD */
     { question: "Which planet is closest to the Sun?", difficulty: "hard", options: [{ text: "Venus", correct: false }, { text: "Mercury", correct: true }, { text: "Earth", correct: false }, { text: "Mars", correct: false }] },
     { question: "What is the SI unit of electric resistance?", difficulty: "hard", options: [{ text: "Ohm", correct: true }, { text: "Volt", correct: false }, { text: "Ampere", correct: false }, { text: "Watt", correct: false }] },
     { question: "Who proposed the theory of general relativity?", difficulty: "hard", options: [{ text: "Isaac Newton", correct: false }, { text: "Albert Einstein", correct: true }, { text: "Galileo Galilei", correct: false }, { text: "Niels Bohr", correct: false }] },
@@ -42,24 +37,8 @@ document.addEventListener("DOMContentLoaded", () => {
     { question: "Which branch of mathematics deals with the study of shapes and their properties?", difficulty: "hard", options: [{ text: "Algebra", correct: false }, { text: "Geometry", correct: true }, { text: "Calculus", correct: false }, { text: "Statistics", correct: false }] }
   ];
 
-  /* newly added: Time settings per difficulty.
-     for the medium and hard levels kept the time less than the previous level.
-     - easy: highest time
-     - medium: less than easy
-     - hard: less than medium
-     newly added
-  */
-  const TIME_BY_DIFFICULTY = {
-    easy: 30,   // seconds
-    medium: 20, // less than easy
-    hard: 12    // less than medium
-  };
-
-  const prizeLevels = [
-    1000, 2000, 5000, 10000, 20000,
-    40000, 80000, 160000, 320000, 640000,
-    1250000, 2500000, 5000000, 7500000, 10000000
-  ];
+  const TIME_BY_DIFFICULTY = { easy: 30, medium: 20, hard: 12 };
+  const prizeLevels = [1000,2000,5000,10000,20000,40000,80000,160000,320000,640000,1250000,2500000,5000000,7500000,10000000];
 
   // DOM elements
   const startScreen = document.getElementById("start-screen");
@@ -82,13 +61,10 @@ document.addEventListener("DOMContentLoaded", () => {
   const timerEl = document.getElementById("timer");
 
   const pointsValue = document.getElementById("points-value");
-
-  // newly added: difficulty UI elements 
   const difficultyGroup = document.getElementById("difficulty-group");
   const difficultyButtons = difficultyGroup ? difficultyGroup.querySelectorAll(".difficulty-btn") : [];
-  let selectedDifficulty = "medium"; // default -- newly added
+  let selectedDifficulty = "medium";
 
-  // attach click handlers to difficulty buttons (newly added)
   difficultyButtons.forEach(btn => {
     btn.addEventListener("click", () => {
       difficultyButtons.forEach(b => b.classList.remove("selected"));
@@ -97,39 +73,22 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // Sound (optional)
   const questionSound = new Audio("assets/kbc-question.mp3");
   questionSound.preload = "auto";
 
-  // Game state
   let currentQuestionIndex = 0;
   let score = 0;
   let shuffledQuestions = [];
   let timerInterval = null;
-  let questionTime = TIME_BY_DIFFICULTY[selectedDifficulty]; // will be set on start
-  // QUESTION_TIME constant removed in favor of per-game questionTime
+  let questionTime = TIME_BY_DIFFICULTY[selectedDifficulty];
 
   function updatePointsDisplay() {
     pointsValue.textContent = `₹${score.toLocaleString("en-IN")}`;
-    pointsValue.classList.remove("points-updated");
-    // force reflow to restart animation if CSS added
-    void pointsValue.offsetWidth;
-    pointsValue.classList.add("points-updated");
   }
 
   function startGame() {
-    /* newly added: set questionTime based on chosen difficulty.
-       for the medium and hard levels keep the time less than the previous level.
-       newly added
-    */
     questionTime = TIME_BY_DIFFICULTY[selectedDifficulty] || TIME_BY_DIFFICULTY.easy;
-
-    // Filter questions by selected difficulty (newly added)
-    const filtered = selectedDifficulty
-      ? quizData.filter(q => q.difficulty === selectedDifficulty)
-      : quizData.slice();
-
-    // fallback: if no questions for chosen difficulty, use full set
+    const filtered = quizData.filter(q => q.difficulty === selectedDifficulty);
     const pool = filtered.length ? filtered : quizData.slice();
 
     startScreen.classList.add("hidden");
@@ -139,7 +98,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     score = 0;
     currentQuestionIndex = 0;
-    // shuffle pool and limit to maximum of prizeLevels length to avoid missing prize entries
     shuffledQuestions = [...pool].sort(() => Math.random() - 0.5).slice(0, prizeLevels.length);
     totalQuestionsEl.innerText = shuffledQuestions.length;
     winningsEl.innerText = `₹ ${score}`;
@@ -150,7 +108,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function renderPrizeList() {
     prizeListEl.innerHTML = "";
-    // render in order (lowest -> highest) to match quiz order
     for (let i = 0; i < shuffledQuestions.length; i++) {
       const li = document.createElement("li");
       li.className = "prize-item";
@@ -164,9 +121,9 @@ document.addEventListener("DOMContentLoaded", () => {
   function updatePrizeHighlight() {
     const items = prizeListEl.querySelectorAll("li");
     items.forEach((item, idx) => {
-      item.classList.remove("current", "completed");
-      if (idx < currentQuestionIndex) item.classList.add("completed");
-      if (idx === currentQuestionIndex) item.classList.add("current");
+      item.classList.remove("current","completed","glow");
+      if(idx<currentQuestionIndex) item.classList.add("completed");
+      if(idx===currentQuestionIndex) item.classList.add("current","glow");
     });
   }
 
@@ -175,132 +132,133 @@ document.addEventListener("DOMContentLoaded", () => {
     updatePrizeHighlight();
 
     const current = shuffledQuestions[currentQuestionIndex];
-    questionNumberEl.innerText = currentQuestionIndex + 1;
+    questionNumberEl.innerText = currentQuestionIndex+1;
     questionTextEl.innerText = current.question;
 
-    current.options.forEach((opt, idx) => {
+    current.options.forEach(opt=>{
       const btn = document.createElement("button");
-      btn.type = "button";
-      btn.className = "option-btn";
-      btn.innerText = opt.text;
-      if (opt.correct) btn.dataset.correct = "true";
+      btn.type="button";
+      btn.className="option-btn";
+      btn.innerText=opt.text;
+      if(opt.correct) btn.dataset.correct="true";
       btn.addEventListener("click", selectAnswer);
       optionsContainer.appendChild(btn);
     });
 
-    // play question sound (ignore errors)
-    try {
-      questionSound.currentTime = 0;
-      questionSound.play().catch(() => {});
-    } catch (e) {}
+    try { questionSound.currentTime=0; questionSound.play().catch(()=>{});} catch(e){}
 
     startTimer();
   }
 
   function startTimer() {
     clearInterval(timerInterval);
-    let timeLeft = questionTime; // use per-game questionTime (newly added)
+    let timeLeft = questionTime;
     timerEl.innerText = timeLeft;
-    timerInterval = setInterval(() => {
+    timerInterval = setInterval(()=>{
       timeLeft--;
       timerEl.innerText = timeLeft;
-      if (timeLeft <= 0) {
+      if(timeLeft<=0){
         clearInterval(timerInterval);
         handleTimeout();
       }
-    }, 1000);
+    },1000);
   }
 
-  function handleTimeout() {
-    showFeedback("Time's up! Game Over.", "wrong");
-    // reveal correct answer
-    Array.from(optionsContainer.children).forEach(btn => {
-      if (btn.dataset.correct === "true") btn.classList.add("correct");
-      btn.disabled = true;
+  function handleTimeout(){
+    showFeedback("Time's up! Game Over.","wrong");
+    Array.from(optionsContainer.children).forEach(btn=>{
+      if(btn.dataset.correct==="true") btn.classList.add("correct");
+      btn.disabled=true;
     });
-    setTimeout(endGame, 1500);
+    setTimeout(endGame,1500);
   }
 
-  function resetState() {
+  function resetState(){
     clearInterval(timerInterval);
     nextBtn.classList.add("hidden");
-    feedbackContainer.innerHTML = "";
-    optionsContainer.innerHTML = "";
+    feedbackContainer.innerHTML="";
+    optionsContainer.innerHTML="";
   }
 
-  function selectAnswer(e) {
+  function selectAnswer(e){
     clearInterval(timerInterval);
-    const selectedBtn = e.currentTarget;
-    const isCorrect = selectedBtn.dataset.correct === "true";
+    const selectedBtn=e.currentTarget;
+    const isCorrect = selectedBtn.dataset.correct==="true";
 
-    // disable all and show status
-    Array.from(optionsContainer.children).forEach(btn => {
-      btn.disabled = true;
-      const correct = btn.dataset.correct === "true";
-      setStatusClass(btn, correct);
+    Array.from(optionsContainer.children).forEach(btn=>{
+      btn.disabled=true;
+      const correct = btn.dataset.correct==="true";
+      setStatusClass(btn,correct);
     });
 
-    if (isCorrect) {
-      // award current prize
-      score = prizeLevels[currentQuestionIndex];
-      winningsEl.innerText = `₹ ${score.toLocaleString("en-IN")}`;
+    if(isCorrect){
+      score=prizeLevels[currentQuestionIndex];
+      winningsEl.innerText=`₹ ${score.toLocaleString("en-IN")}`;
       updatePointsDisplay();
-      showFeedback("Correct Answer!", "correct");
+      showFeedback("Correct Answer!","correct");
 
-      // mark completed
       const item = prizeListEl.querySelector(`li[data-index="${currentQuestionIndex}"]`);
-      if (item) item.classList.add("completed");
+      if(item) item.classList.add("completed");
 
-      // next or finish
-      if (currentQuestionIndex < shuffledQuestions.length - 1) {
-        nextBtn.classList.remove("hidden");
-      } else {
-        showFeedback("Congratulations! You've won it all!", "correct");
-        setTimeout(endGame, 1200);
-      }
+      setTimeout(()=>{
+        if(currentQuestionIndex<shuffledQuestions.length-1){
+          nextBtn.classList.remove("hidden");
+        } else {
+          showFeedback("Congratulations! You've won it all!","correct");
+          setTimeout(endGame,1200);
+        }
+      },500);
+
     } else {
-      showFeedback("Wrong Answer! Game Over.", "wrong");
-      setTimeout(endGame, 1200);
+      showFeedback("Wrong Answer! Game Over.","wrong");
+      setTimeout(endGame,1200);
     }
   }
 
-  function setStatusClass(element, correct) {
-    element.classList.remove("correct", "incorrect");
-    if (correct) {
-      element.classList.add("correct");
-    } else {
-      element.classList.add("incorrect");
-    }
+  function setStatusClass(element, correct){
+    element.classList.remove("correct","incorrect");
+    if(correct) element.classList.add("correct");
+    else element.classList.add("incorrect");
   }
 
-  function showFeedback(message, status) {
-    feedbackContainer.innerHTML = "";
-    const p = document.createElement("p");
-    p.className = "feedback";
-    p.innerText = message;
-    if (status === "correct") p.classList.add("text-green");
-    if (status === "wrong") p.classList.add("text-red");
+  function showFeedback(message,status){
+    feedbackContainer.innerHTML="";
+    const p=document.createElement("p");
+    p.className="feedback";
+    p.innerText=message;
+    if(status==="correct") p.classList.add("text-green");
+    if(status==="wrong") p.classList.add("text-red");
     feedbackContainer.appendChild(p);
   }
 
-  function handleNextQuestion() {
+  function handleNextQuestion(){
     currentQuestionIndex++;
     showQuestion();
   }
 
-  function endGame() {
+  function endGame(){
     clearInterval(timerInterval);
     quizScreen.classList.add("hidden");
     gameOverScreen.classList.remove("hidden");
     prizePanelContainer.classList.add("hidden");
-    finalScoreEl.innerText = `₹ ${score.toLocaleString("en-IN")}`;
+    finalScoreEl.innerText=`₹ ${score.toLocaleString("en-IN")}`;
   }
 
-  // Event listeners
-  startBtn.addEventListener("click", startGame);
-  nextBtn.addEventListener("click", handleNextQuestion);
-  playAgainBtn.addEventListener("click", startGame);
+  startBtn.addEventListener("click",startGame);
+  nextBtn.addEventListener("click",handleNextQuestion);
+  playAgainBtn.addEventListener("click",startGame);
 
-  // initialize display
   updatePointsDisplay();
+
+  // Glow & flash CSS
+  const style=document.createElement("style");
+  style.innerHTML=`
+    .prize-list li.glow{animation:glowPulse 1.5s infinite;}
+    @keyframes glowPulse{0%,100%{box-shadow:0 0 8px #ffd700; transform:scale(1);}50%{box-shadow:0 0 20px #ffd700; transform:scale(1.03);}}
+    .option-btn.correct{animation:correctFlash 0.8s;}
+    .option-btn.incorrect{animation:wrongFlash 0.8s;}
+    @keyframes correctFlash{0%,100%{background-color:rgba(34,197,94,0.2);}50%{background-color:rgba(34,197,94,0.5);}}
+    @keyframes wrongFlash{0%,100%{background-color:rgba(239,68,68,0.2);}50%{background-color:rgba(239,68,68,0.5);}}
+  `;
+  document.head.appendChild(style);
 });
